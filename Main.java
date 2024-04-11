@@ -36,7 +36,7 @@ public class Main {
         Scanner myScn = new Scanner(System.in);
         boolean connector_exists = false;
         System.out.println("Podaj wagę połączenia");
-        int edge_weight = Integer.parseInt(myScn.nextLine());
+        int edge_weight = Math.abs(Integer.parseInt(myScn.nextLine()));//używamy w. bezwzględnej, aby uniknąć wartości ujemnych - inaczej alg. Dijkstry nie zadziała
         System.out.println("Podaj id wierzchołka, z jakim chcesz połączyć ten wierzchołek.");
         int connector_id = Integer.parseInt(myScn.nextLine());
         for(GraphNode gn : nodes){
@@ -63,21 +63,35 @@ public class Main {
         GraphNode closest;
         GraphEdge edge_to_closest;
         ArrayList<GraphNode> Q = nodes;
-        int distance = 0;
-        for(GraphEdge ge: s.edges){
-            distance = 999;
-            if(ge.weight < distance){
-                distance = ge.weight;
-                edge_to_closest = ge;
+        for(GraphNode inf_setter : Q){
+            inf_setter.dis = Double.POSITIVE_INFINITY;
+        }
+
+        s.dis = 0;
+        while (!Q.isEmpty()){
+            GraphNode v;
+            int distance = 9999;
+            for(GraphNode ge: Q){ //szukamy wierzchołka o najmniejszej odległości
+                if(ge.dis < distance){
+                    v = ge;
+                }
+
             }
 
-        }
-        GraphNode v = edge_to_closest.nodeToConnect;
-        Q.remove(v);
-        for(GraphEdge k : v.edges){
-            GraphNode u = k.nodeToConnect;
 
+            Q.remove(v);
+            for(GraphEdge k : v.edges){
+                if(k.nodeToConnect != s) { //sprawdzamy, czy ta krawędź nie prowadzi do poprzedniego wierzchołka - czy to na pewno tak?
+                    GraphNode u = k.nodeToConnect;
+                    if(k.weight < u.dis){
+                        u.dis = v.dis + k.weight;
+                        u.previous = v;
+                    }
+                }
+
+            }
         }
+
 
     }
 }
