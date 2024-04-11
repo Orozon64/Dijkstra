@@ -59,7 +59,7 @@ public class Main {
         }
 
     }
-    public static void Dijkstra(GraphNode s){
+    public static int Dijkstra(GraphNode s, GraphNode dest){
         ArrayList<GraphNode> Q = nodes;
         for(GraphNode inf_setter : Q){
             inf_setter.dis = Double.POSITIVE_INFINITY;
@@ -86,5 +86,6 @@ public class Main {
                 }
 
             }
+        return (int) dest.dis;
         }
 }
