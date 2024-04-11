@@ -67,7 +67,7 @@ public class Main {
 
         s.dis = 0;
         while (!Q.isEmpty()){
-            GraphNode v = new GraphNode(-20); //rozwiązanie tymczasowe
+            GraphNode v = new GraphNode(-20); 
             int distance = 9999;
             for(GraphNode ge: Q){ //szukamy wierzchołka o najmniejszej odległości
                 if(ge.dis < distance){
