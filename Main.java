@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Main {
     static ArrayList<GraphNode> nodes = new ArrayList<>();
     public static void main(String[] args) {
+
         Scanner myScn = new Scanner(System.in);
         boolean should_stop = false;
         do{
@@ -12,7 +13,7 @@ public class Main {
             GraphNode n1 = new GraphNode(nodekey);
             nodes.add(n1);
             Connect(n1);
-            System.out.println("Dodać jescze jakieś węzły? 0 - tak, 1 - nie");
+            System.out.println("Dodać jescze jakieś wierzchołki? 0 - tak, 1 - nie");
             int continue_response = Integer.parseInt(myScn.nextLine());
             switch (continue_response){
                 case 0:
@@ -20,17 +21,30 @@ public class Main {
                 case 1:
                     should_stop = true;
                     break;
-
             }
         }while (!should_stop);
-
         for (GraphNode no: nodes){
-            System.out.println("Obecny węzeł ma klucz równy " + no.key);
+            System.out.println("Obecny wierzchołek ma klucz równy " + no.key);
             System.out.println("Jest powiązany z:");
             for(GraphEdge ge: no.edges){
-                System.out.println("Węzłem o kluczu " + ge.nodeToConnect.key + " połączeniem o wadze " + ge.weight);
+                System.out.println("Wierzchołkiem o kluczu " + ge.nodeToConnect.key + " połączeniem o wadze " + ge.weight);
             }
         }
+        GraphNode dijkstra_src = new GraphNode(-99); //aby uniknąć komunikatów o niezinicjalizowanej zmiennej
+        GraphNode dijkstra_des = new GraphNode(-99);
+        System.out.println("Podaj id wierzchołka-źródła: ");
+        int dij_src_id = Integer.parseInt(myScn.nextLine());
+        System.out.println("Podaj id wierzchołka-celu: ");
+        int dij_des_id = Integer.parseInt(myScn.nextLine());
+        for(GraphNode gn : nodes){
+            if(gn.key == dij_src_id){
+                dijkstra_src = gn;
+            }
+            else if (gn.key == dij_des_id) {
+                dijkstra_des = gn;
+            }
+        }
+        System.out.println("Najkrótsza odległość pomiędzy tymi wierzchołkami wynosi " + Dijkstra(dijkstra_src, dijkstra_des));
     }
     public static void Connect(GraphNode con_node){
         Scanner myScn = new Scanner(System.in);
@@ -47,7 +61,6 @@ public class Main {
                 gn.edges.add(con_edge);
                 connector_exists = true;
             }
-
         }
         if(!connector_exists){
             GraphNode con = new GraphNode(connector_id);
@@ -57,24 +70,21 @@ public class Main {
             GraphEdge con_edge = new GraphEdge(edge_weight, con_node);
             con.edges.add(con_edge);
         }
-
     }
     public static int Dijkstra(GraphNode s, GraphNode dest){
         ArrayList<GraphNode> Q = nodes;
         for(GraphNode inf_setter : Q){
             inf_setter.dis = Double.POSITIVE_INFINITY;
         }
-
         s.dis = 0;
         while (!Q.isEmpty()){
-            GraphNode v = new GraphNode(-20); 
+            GraphNode v = new GraphNode(-20);
             int distance = 9999;
             for(GraphNode ge: Q){ //szukamy wierzchołka o najmniejszej odległości
                 if(ge.dis < distance){
                     distance = (int) ge.dis;
                     v = ge;
                 }
-
             }
             Q.remove(v);
             for(GraphEdge k : v.edges){
@@ -84,7 +94,6 @@ public class Main {
                         u.previous = v;
                     }
                 }
-
             }
         return (int) dest.dis;
         }
