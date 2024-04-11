@@ -57,7 +57,9 @@ public class Main {
             GraphEdge con_edge = new GraphEdge(edge_weight, con_node);
             con.edges.add(con_edge);
         }
-        public static void Dijkstra(GraphNode s){
+
+    }
+    public static void Dijkstra(GraphNode s){
         GraphNode closest;
         GraphEdge edge_to_closest;
         ArrayList<GraphNode> Q = nodes;
@@ -65,7 +67,7 @@ public class Main {
         for(GraphEdge ge: s.edges){
             distance = 999;
             if(ge.weight < distance){
-                distance = ge.weight; 
+                distance = ge.weight;
                 edge_to_closest = ge;
             }
 
@@ -73,10 +75,9 @@ public class Main {
         GraphNode v = edge_to_closest.nodeToConnect;
         Q.remove(v);
         for(GraphEdge k : v.edges){
-            GraphNode u = k.nodeToConnect; 
+            GraphNode u = k.nodeToConnect;
 
         }
 
-    }
     }
 }
