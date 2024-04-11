@@ -60,8 +60,6 @@ public class Main {
 
     }
     public static void Dijkstra(GraphNode s){
-        GraphNode closest;
-        GraphEdge edge_to_closest;
         ArrayList<GraphNode> Q = nodes;
         for(GraphNode inf_setter : Q){
             inf_setter.dis = Double.POSITIVE_INFINITY;
@@ -69,20 +67,18 @@ public class Main {
 
         s.dis = 0;
         while (!Q.isEmpty()){
-            GraphNode v;
+            GraphNode v = new GraphNode(-20); //rozwiązanie tymczasowe
             int distance = 9999;
             for(GraphNode ge: Q){ //szukamy wierzchołka o najmniejszej odległości
                 if(ge.dis < distance){
+                    distance = (int) ge.dis;
                     v = ge;
                 }
 
             }
-
-
             Q.remove(v);
             for(GraphEdge k : v.edges){
-                if(k.nodeToConnect != s) { //sprawdzamy, czy ta krawędź nie prowadzi do poprzedniego wierzchołka - czy to na pewno tak?
-                    GraphNode u = k.nodeToConnect;
+                GraphNode u = k.nodeToConnect;
                     if(k.weight < u.dis){
                         u.dis = v.dis + k.weight;
                         u.previous = v;
@@ -91,7 +87,4 @@ public class Main {
 
             }
         }
-
-
-    }
 }
