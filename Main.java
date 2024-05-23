@@ -74,9 +74,14 @@ public class Main {
     public static int Dijkstra(GraphNode s, GraphNode dest){
         ArrayList<GraphNode> Q = nodes;
         for(GraphNode inf_setter : Q){
-            inf_setter.dis = Double.POSITIVE_INFINITY;
+            if(inf_setter == s){
+                inf_setter.dis = 0;
+            }
+            else{
+                inf_setter.dis = Double.POSITIVE_INFINITY;
+            }
+            
         }
-        s.dis = 0;
         while (!Q.isEmpty()){
             GraphNode v = new GraphNode(-20);
             int distance = 9999;
